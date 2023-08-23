@@ -22,6 +22,16 @@ import { Role, ReqUrl } from './decorator/user.decorator';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  /**
+   * 新建管理员账号 - 此api不会暴露给前端
+   * 管理员的 type = 4
+   */
+  @Post('/createAdmin')
+  createAdmin(@Body() createUserDto: CreateUserDto) {
+    createUserDto.userType = 4;
+    return this.userService.create(createUserDto);
+  }
+
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);

@@ -24,11 +24,9 @@ export class Response<T = any> implements NestInterceptor {
           if (typeof res === 'object') {
             if (res.message) {
               message = res.message;
-              // delete res.message
+              delete res.message;
             }
-            if (res.data) {
-              data = res.data;
-            }
+            data = res;
           } else {
             message = res;
           }
