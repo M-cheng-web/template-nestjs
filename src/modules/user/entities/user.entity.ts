@@ -45,7 +45,7 @@ export class User {
     enum: [1, 2, 3, 4],
     default: 1,
   })
-  usertypeEnum: number;
+  userType: number;
 
   // 所有的列选项
   // @Column({

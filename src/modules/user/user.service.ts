@@ -13,14 +13,21 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
-    const newGuards = this.userRepository.create(createUserDto);
-    return this.userRepository.save(newGuards).then((res) => {
-      return {
-        data: res,
-        message: '添加成功',
-      };
+  async create(createUserDto: CreateUserDto) {
+    const userInfo = await this.userRepository.findOne({
+      where: { account: createUserDto.account },
     });
+    if (userInfo && userInfo.id) {
+      throw new BadRequestException(`此用户已存在: ${createUserDto.account}`);
+    } else {
+      const newGuards = this.userRepository.create(createUserDto);
+      return this.userRepository.save(newGuards).then((res) => {
+        return {
+          data: res,
+          message: '添加成功',
+        };
+      });
+    }
   }
 
   async findAll(findUserDto: FindUserDto) {

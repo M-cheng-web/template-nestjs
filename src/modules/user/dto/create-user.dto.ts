@@ -61,5 +61,5 @@ export class CreateUserDto {
 
   @ApiProperty({ description: '用户类型' })
   @IsNumber()
-  usertypeEnum: number;
+  userType: number;
 }
