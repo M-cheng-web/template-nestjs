@@ -67,6 +67,15 @@ export class UserService {
   }
 
   /**
+   * 根据 account 查找单个用户
+   */
+  findOneByAccount(account: string) {
+    return this.userRepository.findOne({
+      where: { account },
+    });
+  }
+
+  /**
    * 根据 id 更改某个用户信息
    */
   async update(id: number, updateUserDto: UpdateUserDto) {

@@ -1,9 +1,15 @@
-import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import {
+  Module,
+  forwardRef,
+  NestModule,
+  MiddlewareConsumer,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Logger } from 'src/common/middleware';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   // 此模块使用 forFeature() 方法定义在当前范围中注册哪些存储库
@@ -11,6 +17,7 @@ import { Logger } from 'src/common/middleware';
   imports: [TypeOrmModule.forFeature([User])],
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserService],
 })
 export class UserModule implements NestModule {
   // 中间件(这里触发两次了，为什么)

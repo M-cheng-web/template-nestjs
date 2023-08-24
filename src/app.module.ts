@@ -8,6 +8,7 @@ import { RolesubModule } from './modules/rolesub/rolesub.module';
 import { CompanyModule } from './modules/company/company.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AuthModule } from './modules/auth/auth.module';
 import envConfig from './config/env';
 
 @Module({
@@ -34,6 +35,7 @@ import envConfig from './config/env';
     RoleModule,
     RolesubModule,
     CompanyModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

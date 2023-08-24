@@ -17,6 +17,7 @@ import { ApiOperation, ApiParam } from '@nestjs/swagger';
 import { UserFindPipe } from './pipe/user.pipe';
 import { UserGuard } from './guard/user.guard';
 import { Role, ReqUrl } from './decorator/user.decorator';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('user')
 export class UserController {
@@ -52,15 +53,18 @@ export class UserController {
    */
   @Get(':id')
   @ApiParam({ name: 'id', description: '用户id', required: true })
-  @UseGuards(UserGuard)
-  @Role('admin')
+  @UseGuards(JwtAuthGuard)
+  // @Role('admin')
   @ApiOperation({
     summary: '根据id查询单个数据',
     description: '请求该接口需要amdin权限',
   })
-  findOne(@Param('id') id: string, @ReqUrl() url: string) {
-    console.log('url', url);
+  findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
+  }
+
+  findOneByAccount(account: string) {
+    return this.userService.findOneByAccount(account);
   }
 
   @Patch(':id')
