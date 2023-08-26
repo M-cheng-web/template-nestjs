@@ -49,17 +49,19 @@ export class UserController {
   }
 
   /**
-   * 这里的admin权限应该是通过jwt拿到用户id然后查询有无权限，而不是在这里去信任前端
+   * 针对此接口，加入了jwt判断 以及 权限等级判断
    */
   @Get(':id')
   @ApiParam({ name: 'id', description: '用户id', required: true })
+  @Role('admin')
+  @UseGuards(UserGuard)
   @UseGuards(JwtAuthGuard)
-  // @Role('admin')
   @ApiOperation({
     summary: '根据id查询单个数据',
     description: '请求该接口需要amdin权限',
   })
   findOne(@Param('id') id: string) {
+    console.log('id', id);
     return this.userService.findOne(+id);
   }
 
