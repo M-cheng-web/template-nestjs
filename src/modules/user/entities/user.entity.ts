@@ -14,8 +14,8 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // 账号
-  @Column()
+  // 账号(唯一)
+  @Column({ unique: true })
   account: string;
 
   // 密码

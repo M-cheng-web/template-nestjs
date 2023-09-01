@@ -16,9 +16,8 @@ import { FindUserDto } from './dto/find-user.dto';
 import { ApiOperation, ApiParam } from '@nestjs/swagger';
 import { UserFindPipe } from './pipe/user.pipe';
 import { UserGuard } from './guard/user.guard';
-import { Role, ReqUrl } from 'src/common/decorator';
+import { Role } from 'src/common/decorator';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { Transaction, EntityManager } from 'typeorm';
 
 @Controller('user')
 export class UserController {
