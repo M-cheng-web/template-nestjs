@@ -5,12 +5,17 @@ import { FindUserDto } from './dto/find-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository, Like } from 'typeorm';
+import { Role } from '../role/entities/role.entity';
+import { RoleService } from '../role/role.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(Role)
+    private roleRepository: Repository<Role>,
+    private readonly roleService: RoleService,
   ) {}
 
   /**
@@ -23,6 +28,20 @@ export class UserService {
     if (userInfo && userInfo.id) {
       throw new BadRequestException(`此用户已存在: ${createUserDto.account}`);
     } else {
+      const { role } = createUserDto;
+      if (!role || !role.length) {
+        throw new BadRequestException(`role 数组请传入角色id`);
+      }
+      const roleList: Role[] = [];
+      for (let i = 0; i < role.length; i++) {
+        const roleId = role[i];
+        const roleInfo = await this.roleService.findOne(roleId);
+        if (!roleInfo) {
+          throw new BadRequestException(`role 数组内请传入有效的角色id`);
+        }
+        roleList.push(roleInfo);
+      }
+      createUserDto.role = roleList;
       const newGuards = this.userRepository.create(createUserDto);
       return this.userRepository.save(newGuards).then((res) => ({
         data: res,

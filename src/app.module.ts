@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { UserModule } from './modules/user/user.module';
 import { AssetModule } from './modules/asset/asset.module';
 import { RoleModule } from './modules/role/role.module';
-import { RolesubModule } from './modules/rolesub/rolesub.module';
 import { CompanyModule } from './modules/company/company.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -33,7 +32,6 @@ import envConfig from './config/env';
     UserModule,
     AssetModule,
     RoleModule,
-    RolesubModule,
     CompanyModule,
     AuthModule,
   ],

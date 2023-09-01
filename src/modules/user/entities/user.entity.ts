@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, Generated } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  Generated,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
+import { Role } from '../../role/entities/role.entity';
 
 @Entity()
 export class User {
@@ -38,7 +46,11 @@ export class User {
   @Generated('uuid')
   uuid: string;
 
-  // 用户类型(这个后续应该维护一个用户类型表)
+  @ManyToMany(() => Role, (role) => role.user)
+  @JoinTable()
+  role: Role[];
+
+  // 用户类型(辅助，并不是真实场景应用)
   @Column({
     // 枚举列
     type: 'enum',

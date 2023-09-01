@@ -5,6 +5,7 @@ import {
   IsNumber,
   IsPhoneNumber,
   IsEmail,
+  IsArray,
   MinLength,
   MaxLength,
   Max,
@@ -58,6 +59,11 @@ export class CreateUserDto {
     },
   )
   email: string;
+
+  @ApiProperty({ description: '用户角色' })
+  @IsNotEmpty()
+  @IsArray()
+  role: any[];
 
   @ApiProperty({ description: '用户类型' })
   @IsNumber()
