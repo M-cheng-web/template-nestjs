@@ -18,4 +18,7 @@ export class CreateRoleDto {
   })
   @IsString()
   roleName: string;
+
+  @IsString()
+  explain: string;
 }

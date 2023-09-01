@@ -6,8 +6,11 @@ export class Role {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   roleName: string;
+
+  @Column({ default: '' })
+  explain: string;
 
   @ManyToMany(() => User, (user) => user.role)
   user: User[];

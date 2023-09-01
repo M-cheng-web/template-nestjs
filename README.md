@@ -20,6 +20,8 @@ nestjs 的模板项目
 nestjs项目目录 https://www.imooc.com/article/315772
 nestjs项目目录 https://juejin.cn/post/6844904192687996936#comment
 
+nestjs 学习导航 https://blog.csdn.net/weixin_44828005/article/details/115499297
+
 ## 目标
 完成一个完整的模板,模板功能对标公司内部的人员、资产系统
 

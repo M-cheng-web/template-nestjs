@@ -1,6 +1,6 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Like } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { Role } from './entities/role.entity';
@@ -37,14 +37,32 @@ export class RoleService {
     return data;
   }
 
-  update(id: number, updateRoleDto: UpdateRoleDto) {
-    return `This action updates a #${id} role`;
+  async update(id: number, updateRoleDto: UpdateRoleDto) {
+    if (JSON.stringify(updateRoleDto) === '{}') {
+      throw new BadRequestException(`请传入要修改的参数`);
+    }
+    const info = await this.findOne(id);
+    if (info) {
+      if (updateRoleDto.roleName && info.roleName !== updateRoleDto.roleName) {
+        throw new BadRequestException(`不能修改角色名称`);
+      }
+      await this.roleRepository.update(id, updateRoleDto);
+    } else {
+      throw new BadRequestException(`没有此用户`);
+    }
   }
 
   async remove(id: number) {
     const info = await this.findOne(id);
     if (info) {
-      await this.roleRepository.delete(id);
+      return this.roleRepository
+        .delete(id)
+        .then(() => {
+          return '删除成功';
+        })
+        .catch(() => {
+          throw new BadRequestException(`此角色正在被使用`);
+        });
     } else {
       throw new BadRequestException(`没有此角色`);
     }
