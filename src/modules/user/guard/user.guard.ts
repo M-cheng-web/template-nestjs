@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { Reflector } from '@nestjs/core';
-import { ReqQuery } from '../decorator/user.decorator';
+import { ReqQuery } from 'src/common/decorator';
 
 /**
  * 进行权限判断
