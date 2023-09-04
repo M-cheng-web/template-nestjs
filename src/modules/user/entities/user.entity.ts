@@ -4,9 +4,12 @@ import {
   PrimaryGeneratedColumn,
   Generated,
   ManyToMany,
+  OneToOne,
   JoinTable,
+  JoinColumn,
 } from 'typeorm';
 import { Role } from '../../role/entities/role.entity';
+import { Asset } from '../../asset/entities/asset.entity';
 
 @Entity()
 export class User {
@@ -49,6 +52,10 @@ export class User {
   @ManyToMany(() => Role, (role) => role.user)
   @JoinTable()
   role: Role[];
+
+  @OneToOne(() => Asset, (asset) => asset.user)
+  @JoinColumn()
+  asset: Asset;
 
   // 用户类型(辅助，并不是真实场景应用)
   @Column({

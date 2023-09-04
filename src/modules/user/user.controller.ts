@@ -15,7 +15,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { FindUserDto } from './dto/find-user.dto';
 import { ApiOperation, ApiParam } from '@nestjs/swagger';
 import { UserFindPipe } from './pipe/user.pipe';
-import { UserGuard } from './guard/user.guard';
+import { UserGuard } from 'src/common/user.guard';
 import { Role } from 'src/common/decorator';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
