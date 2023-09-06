@@ -45,11 +45,12 @@ export class Asset {
   // 资产绑定历史
   @Column({
     name: 'user_use_list',
+    default: null,
   })
-  userUseList: number;
+  userUseList: string;
 
   // 资产说明
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, default: '' })
   description: string;
 
   // 是否为激活状态
