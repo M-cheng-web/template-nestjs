@@ -13,7 +13,7 @@ import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { ApiOperation } from '@nestjs/swagger';
 import { Role } from 'src/common/decorator';
-import { UserGuard } from 'src/modules/user/guard/user.guard';
+import { UserGuard } from 'src/common/user.guard';
 import { JwtAuthGuard } from 'src/modules/auth/jwt-auth.guard';
 
 @Controller('role')

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class CreateAssetDto {
@@ -19,25 +19,31 @@ export class CreateAssetDto {
 
   @ApiProperty({ description: '资产绑定人' })
   @IsString()
+  @IsOptional()
   user: any;
 
   @ApiProperty({ description: '当前绑定人 - 开始时间' })
   @IsString()
+  @IsOptional()
   userUseTime: string;
 
   @ApiProperty({ description: '当前绑定人 - 结束时间' })
   @IsString()
+  @IsOptional()
   userOutTime: string;
 
   @ApiProperty({ description: '资产绑定历史' })
   @IsString()
+  @IsOptional()
   userUseList: string;
 
   @ApiProperty({ description: '资产说明' })
   @IsString()
+  @IsOptional()
   description: string;
 
   @ApiProperty({ description: '是否为激活状态' })
   @IsString()
+  @IsOptional()
   isActive: boolean;
 }

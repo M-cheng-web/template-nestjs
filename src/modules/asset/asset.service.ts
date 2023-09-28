@@ -33,19 +33,41 @@ export class AssetService {
     }));
   }
 
-  findAll() {
-    return `This action returns all asset`;
+  async findAll() {
+    const data = await this.assetRepository.find();
+    return data;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} asset`;
+  async findOne(id: number) {
+    const data = await this.assetRepository.findOne({ where: { id } });
+    return data;
   }
 
-  update(id: number, updateAssetDto: UpdateAssetDto) {
-    return `This action updates a #${id} asset`;
+  async update(id: number, updateAssetDto: UpdateAssetDto) {
+    if (JSON.stringify(updateAssetDto) === '{}') {
+      throw new BadRequestException(`请传入要修改的参数`);
+    }
+    const info = await this.findOne(id);
+    if (info) {
+      await this.assetRepository.update(id, updateAssetDto);
+    } else {
+      throw new BadRequestException(`没有此资产`);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} asset`;
+  async remove(id: number) {
+    const info = await this.findOne(id);
+    if (info) {
+      return this.assetRepository
+        .delete(id)
+        .then(() => {
+          return '删除成功';
+        })
+        .catch(() => {
+          throw new BadRequestException(`此资产正在被使用`);
+        });
+    } else {
+      throw new BadRequestException(`没有此资产`);
+    }
   }
 }

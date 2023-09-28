@@ -24,9 +24,8 @@ export class AssetController {
    * 针对此接口，加入了jwt判断 以及 权限等级判断
    */
   @Post()
-  @ApiParam({ name: 'id', description: '用户id', required: true })
   @ApiOperation({
-    summary: '根据id查询单个数据',
+    summary: '新增资产',
     description: '请求该接口需要amdin权限',
   })
   @Role('admin')
@@ -37,21 +36,41 @@ export class AssetController {
   }
 
   @Get()
+  @ApiOperation({
+    summary: '查询所有资产',
+    description: '请求该接口需要登录',
+  })
+  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.assetService.findAll();
   }
 
   @Get(':id')
+  @ApiOperation({
+    summary: '查询单个资产',
+    description: '请求该接口需要登录',
+  })
+  @UseGuards(JwtAuthGuard)
   findOne(@Param('id') id: string) {
     return this.assetService.findOne(+id);
   }
 
   @Patch(':id')
+  @ApiOperation({
+    summary: '更改资产的基本信息',
+    description: '请求该接口需要登录',
+  })
+  @UseGuards(JwtAuthGuard)
   update(@Param('id') id: string, @Body() updateAssetDto: UpdateAssetDto) {
     return this.assetService.update(+id, updateAssetDto);
   }
 
   @Delete(':id')
+  @ApiOperation({
+    summary: '删除单个资产',
+    description: '请求该接口需要登录',
+  })
+  @UseGuards(JwtAuthGuard)
   remove(@Param('id') id: string) {
     return this.assetService.remove(+id);
   }
